@@ -30,5 +30,25 @@ public class ObservableTransformationsTest {
         Assertions.assertThat(output.get(4)).isEqualTo(input.get(4) * 2);
     }
 
+    @Test
+    public void castToDifferentType() {
+
+        // given
+        List<Object> input = Arrays.asList(1,2,3,4,5);
+        List<Integer> output = new ArrayList<>(5);
+
+        // when
+        Observable.fromIterable(input)
+                .cast(Integer.class)
+                .subscribe(output::add);
+
+        // then
+        Assertions.assertThat(output.get(0)).isEqualTo(input.get(0));
+        Assertions.assertThat(output.get(1)).isEqualTo(input.get(1));
+        Assertions.assertThat(output.get(2)).isEqualTo(input.get(2));
+        Assertions.assertThat(output.get(3)).isEqualTo(input.get(3));
+        Assertions.assertThat(output.get(4)).isEqualTo(input.get(4));
+    }
+
 
 }
