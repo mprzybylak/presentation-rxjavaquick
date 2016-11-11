@@ -2,11 +2,13 @@ package pl.mprzybylak.presentation.rxjavaquick;
 
 import io.reactivex.Observable;
 import org.junit.Test;
+import pl.mprzybylak.presentation.rxjavaquik.FibonacciNumberService;
 import pl.mprzybylak.presentation.rxjavaquik.Money;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -79,6 +81,20 @@ public class CreateObservableTest {
         assertThat(firstTick.get()).isEqualTo(1);
         assertThat(secondTick.get()).isEqualTo(2);
         assertThat(thirdTick.get()).isEqualTo(3);
+    }
+
+    @Test
+    public void fromFuture() {
+
+        // given
+        Future<Integer> fibonacciComputation = new FibonacciNumberService().countNthFibonacciNumber(20);
+        AtomicInteger fibonacciNumber = new AtomicInteger(0);
+
+        // when
+        Observable.fromFuture(fibonacciComputation).subscribe(fibonacciNumber::set);
+
+        // then
+        assertThat(fibonacciNumber.get()).isEqualTo(6765);
     }
 
     private Money money(long value) {
