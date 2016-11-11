@@ -113,6 +113,34 @@ public class CreateObservableTest {
         assertThat(sequence.get(sequence.size() - 1)).isEqualTo(9);
     }
 
+
+    @Test
+    public void defer() {
+
+        // given
+        AtomicInteger firstResult = new AtomicInteger(0);
+        AtomicInteger secondResult = new AtomicInteger(0);
+        AtomicInteger thirdResult = new AtomicInteger(0);
+
+        AtomicInteger value = new AtomicInteger(1);
+        Observable<Integer> deferredObservable = Observable.defer(() -> Observable.just(value.get()));
+
+        // when
+        value.set(10);
+        deferredObservable.subscribe(firstResult::set);
+
+        value.set(100);
+        deferredObservable.subscribe(secondResult::set);
+
+        value.set(1000);
+        deferredObservable.subscribe(thirdResult::set);
+
+        // then
+        assertThat(firstResult.get()).isEqualTo(10);
+        assertThat(secondResult.get()).isEqualTo(100);
+        assertThat(thirdResult.get()).isEqualTo(1000);
+    }
+
     private Money money(long value) {
         return new Money(value);
     }
