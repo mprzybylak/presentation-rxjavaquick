@@ -23,7 +23,6 @@ public class HelloWorldTest {
         assertThat(sb.toString()).isEqualTo("Hello, World!");
     }
 
-
     @Test
     public void helloWorldFluent() {
 
