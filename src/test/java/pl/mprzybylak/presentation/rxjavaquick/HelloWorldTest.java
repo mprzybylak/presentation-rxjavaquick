@@ -23,4 +23,19 @@ public class HelloWorldTest {
         assertThat(sb.toString()).isEqualTo("Hello, World!");
     }
 
+
+    @Test
+    public void helloWorldFluent() {
+
+        // given
+        String[] hello = new String[] {"H", "e", "l", "l", "o", ",", " ", "W", "o", "r", "l", "d", "!"};
+        StringBuilder sb = new StringBuilder();
+
+        // when
+        Observable.fromArray(hello).subscribe(sb::append);
+
+        // then
+        assertThat(sb.toString()).isEqualTo("Hello, World!");
+    }
+
 }
