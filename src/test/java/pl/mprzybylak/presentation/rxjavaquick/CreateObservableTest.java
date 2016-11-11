@@ -5,6 +5,7 @@ import org.junit.Test;
 import pl.mprzybylak.presentation.rxjavaquik.FibonacciNumberService;
 import pl.mprzybylak.presentation.rxjavaquik.Money;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -95,6 +96,21 @@ public class CreateObservableTest {
 
         // then
         assertThat(fibonacciNumber.get()).isEqualTo(6765);
+    }
+
+    @Test
+    public void orderedSequenceOfConsecutiveNumbers() {
+
+        // given
+        List<Integer> sequence = new ArrayList<>(10);
+
+        // when
+        Observable.range(0, 10).subscribe(sequence::add);
+
+        // then
+        assertThat(sequence.size()).isEqualTo(10);
+        assertThat(sequence.get(0)).isEqualTo(0);
+        assertThat(sequence.get(sequence.size() - 1)).isEqualTo(9);
     }
 
     private Money money(long value) {
