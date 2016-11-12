@@ -60,7 +60,21 @@ public class ObservableFilteringTest {
 
         // then
         assertThat(firstValue.get()).isEqualTo(1);
+    }
 
+    @Test
+    public void onlyLastElement() {
+
+        // given
+        AtomicInteger firstValue = new AtomicInteger();
+
+        // when
+        Observable.range(1, 1000)
+                .last()
+                .subscribe(firstValue::set);
+
+        // then
+        assertThat(firstValue.get()).isEqualTo(1000);
     }
 
     @Test
