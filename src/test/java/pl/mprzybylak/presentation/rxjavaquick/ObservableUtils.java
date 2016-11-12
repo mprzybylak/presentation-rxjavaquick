@@ -50,4 +50,19 @@ public class ObservableUtils {
         assertThat(b.get()).isTrue();
     }
 
+    @Test
+    public void actionOnEachElement() {} {
+
+        // given
+        List<AtomicBoolean> booleans = new ArrayList<>();
+
+        // when
+        Observable.range(1, 10)
+                .doOnEach(i -> booleans.add(new AtomicBoolean(true)))
+                .subscribe();
+
+        // then
+        booleans.forEach(b -> assertThat(b.get()).isTrue());
+    }
+
 }
