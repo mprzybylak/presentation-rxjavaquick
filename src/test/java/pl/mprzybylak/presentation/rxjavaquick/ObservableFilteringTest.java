@@ -23,7 +23,7 @@ public class ObservableFilteringTest {
         List<Integer> evenNumbers = new ArrayList<>(500);
 
         // when
-        Observable.range(1,1000)
+        Observable.range(1, 1000)
                 .filter(i -> i % 2 == 0)
                 .subscribe(evenNumbers::add);
 
@@ -47,6 +47,21 @@ public class ObservableFilteringTest {
         assertThat(withoutDuplicates).hasSize(5);
     }
 
+    @Test
+    public void onlyFirstElement() {
+
+        // given
+        AtomicInteger firstValue = new AtomicInteger();
+
+        // when
+        Observable.range(1, 1000)
+                .first()
+                .subscribe(firstValue::set);
+
+        // then
+        assertThat(firstValue.get()).isEqualTo(1);
+
+    }
 
     @Test
     public void onlyNthElement() {
