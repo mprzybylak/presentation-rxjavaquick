@@ -2,6 +2,7 @@ package pl.mprzybylak.presentation.rxjavaquick;
 
 import io.reactivex.Observable;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.Condition;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -12,6 +13,23 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ObservableFilteringTest {
+
+    private static final Condition<Integer> EVEN = new Condition<>(integer -> integer % 2 == 0, "cond");
+
+    @Test
+    public void onlyElementsMatchPredicate() {
+
+        // given
+        List<Integer> evenNumbers = new ArrayList<>(500);
+
+        // when
+        Observable.range(1,1000)
+                .filter(i -> i % 2 == 0)
+                .subscribe(evenNumbers::add);
+
+        // then
+        evenNumbers.forEach(e -> assertThat(e).is(EVEN));
+    }
 
     @Test
     public void onlyDistinctElements() {
