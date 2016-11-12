@@ -10,6 +10,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,6 +33,21 @@ public class ObservableUtils {
         // then
         int between = (int) beforeSubscription.until(dates.get(0), ChronoUnit.SECONDS);
         assertThat(between).isBetween(1, 2);
+    }
+
+    @Test
+    public void actionOnFinish() {
+
+        // given
+        AtomicBoolean b = new AtomicBoolean(false);
+
+        // when
+        Observable.range(1, 10)
+                .doOnComplete(() -> b.set(true))
+                .subscribe();
+
+        // then
+        assertThat(b.get()).isTrue();
     }
 
 }
