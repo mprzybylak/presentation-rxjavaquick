@@ -106,4 +106,35 @@ public class ObservableFilteringTest {
         assertThat(thirdItem.get()).isEqualTo(3);
     }
 
+    @Test
+    public void skipFirstNElements() {
+
+        // given
+        List<Integer> lastElements = new ArrayList<>(90);
+
+        // when
+        Observable.range(1, 100)
+                .skip(10)
+                .subscribe(lastElements::add);
+
+        // then
+        assertThat(lastElements.get(0)).isEqualTo(11);
+    }
+
+    @Test
+    public void skipLastNElements() {
+
+        // given
+        List<Integer> firstElements = new ArrayList<>(90);
+
+        // when
+        Observable.range(1, 100)
+                .skipLast(10)
+                .subscribe(firstElements::add);
+
+        // then
+        assertThat(firstElements.get(89)).isEqualTo(90);
+
+    }
+
 }
