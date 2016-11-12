@@ -6,8 +6,10 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.LongAdder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -122,6 +124,37 @@ public class ObservableTransformationsTest {
         assertThat(sumsOfTwoValues.get(3)).isEqualTo(7 + 8);
         assertThat(sumsOfTwoValues.get(4)).isEqualTo(9 + 10);
     }
+
+    @Test
+    public void window() {
+
+        // given
+        List<AtomicInteger> sumsOfTwoValues = atomicIntegerArrayList(5);
+        Iterator<AtomicInteger> it = sumsOfTwoValues.iterator();
+
+        // when
+        Observable.range(1, 10)
+                .window(2)
+                .subscribe(o -> {
+                    AtomicInteger sum = it.next();
+                    o.subscribe(sum::addAndGet);
+                });
+
+        // then
+        assertThat(sumsOfTwoValues.get(0).get()).isEqualTo(1 + 2);
+        assertThat(sumsOfTwoValues.get(1).get()).isEqualTo(3 + 4);
+        assertThat(sumsOfTwoValues.get(2).get()).isEqualTo(5 + 6);
+        assertThat(sumsOfTwoValues.get(3).get()).isEqualTo(7 + 8);
+        assertThat(sumsOfTwoValues.get(4).get()).isEqualTo(9 + 10);
+    }
+
+    private List<AtomicInteger> atomicIntegerArrayList(int size) {
+        List<AtomicInteger> list = new ArrayList<>(size);
+        for(int i = 0; i < size; ++i) {
+            list.add(new AtomicInteger());
+        }
+        return list;
+    };
 
     @Test
     public void castToDifferentType() {
