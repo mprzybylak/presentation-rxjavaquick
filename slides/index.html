@@ -70,6 +70,7 @@ Observable.defer(factory); </span>
                         <p>Co możemy robić?</p>
                         <ul>
                             <li>Transformacje</li>
+                            <li>Filtrowanie</li>
                         </ul>
 
                     </section>
@@ -96,6 +97,24 @@ o.bufer(size);
 <span class="fragment">// bierze size kolejnych elementów źródłowych tworząc nowy Observable
 o.window(size);
 </span>
+</code></pre>
+                    </section>
+
+                    <section>
+
+                        <h2>Filtrowanie</h2>
+
+<pre><code class="java" data-trim data-noescape>
+<span class="fragment">o.filter(predicate); // elementy spełniające predykat</span>
+<span class="fragment">o.takeFirst(predicate); // pierwszy element spełniający predykat</span>
+<span class="fragment">o.distinct(); // niezduplikowane elementy</span>
+<span class="fragment">o.first(); // pierwszy element</span>
+<span class="fragment">o.last(); // ostatni element</span>
+<span class="fragment">o.elementAt(n); // n-ty element</span>
+<span class="fragment">o.skip(n); // pominięte pierwsze n elementów</span>
+<span class="fragment">o.skipLast(n); // pominięte ostatnie n elementów</span>
+<span class="fragment">o.take(n); // tylko pierwsze n elementów</span>
+<span class="fragment">o.takeLast(n); // tylko ostatnie n elementów</span>
 </code></pre>
                     </section>
 
