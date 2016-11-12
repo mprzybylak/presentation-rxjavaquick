@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,7 +28,22 @@ public class ObservableAggregatorsTest {
         assertThat(allItems).hasSize(20);
         assertThat(allItems.get(0)).isEqualTo(1);
         assertThat(allItems.get(19)).isEqualTo(20);
-
     }
+
+    @Test
+    public void countHowManyItemsAreInObservable() {
+
+        // given
+        AtomicLong count = new AtomicLong();
+
+        // when
+        Observable.range(1,10)
+                .count()
+                .subscribe(count::set);
+
+        // then
+        assertThat(count.get()).isEqualTo(10);
+    }
+
 
 }
