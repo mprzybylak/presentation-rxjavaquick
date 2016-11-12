@@ -134,7 +134,23 @@ public class ObservableFilteringTest {
 
         // then
         assertThat(firstElements.get(89)).isEqualTo(90);
-
     }
+
+    @Test
+    public void takeFirstNElements() {
+
+        // given
+        List<Integer> firstElements = new ArrayList<>(10);
+
+        // when
+        Observable.range(1, 100)
+                .take(10)
+                .subscribe(firstElements::add);
+
+        // then
+        assertThat(firstElements.get(9)).isEqualTo(10);
+    }
+
+
 
 }
