@@ -1,7 +1,7 @@
 package pl.mprzybylak.presentation.rxjavaquick;
 
 import io.reactivex.Observable;
-import org.assertj.core.api.Assertions;
+import org.assertj.core.api.Condition;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -11,6 +11,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ObservableTransformationsTest {
+
+    private static final Condition<Integer> EVEN = new Condition<>(integer -> integer % 2 == 0, "cond");
 
     @Test
     public void simpleTransform() {
@@ -37,7 +39,7 @@ public class ObservableTransformationsTest {
 
         // given
         List<Integer> input = Arrays.asList(1,2,3);
-        List<Integer> output = new ArrayList<>(15);
+        List<Integer> output = new ArrayList<>(9);
 
         // when
         Observable.fromIterable(input)
@@ -56,6 +58,47 @@ public class ObservableTransformationsTest {
         assertThat(output.get(6)).isEqualTo(3);
         assertThat(output.get(7)).isEqualTo(4);
         assertThat(output.get(8)).isEqualTo(5);
+    }
+
+    @Test
+    public void mapToObservableAndMergeWithoutOrderGuarantee() {
+
+        // given
+        List<Integer> input = Arrays.asList(1,2,3);
+        List<Integer> output = new ArrayList<>(9);
+
+        // when
+        Observable.fromIterable(input)
+                .flatMap(i -> Observable.range(i, 3))
+                .subscribe(output::add);
+
+        // then
+        assertThat(output).contains(1, 2, 3, 4, 5);
+
+    }
+
+    @Test
+    public void groupBy() {
+
+        // given
+        List<Integer> oddNumbers = new ArrayList<>(500);
+        List<Integer> evenNumbers = new ArrayList<>(500);
+
+        // when
+        Observable.range(1,1000)
+            .groupBy(i -> i % 2)
+            .subscribe(groups -> {
+                if(groups.getKey() == 0) {
+                    groups.subscribe(evenNumbers::add);
+                }
+                else {
+                    groups.subscribe(oddNumbers::add);
+                }
+            });
+
+        // then
+        evenNumbers.forEach(o -> assertThat(o).is(EVEN));
+        oddNumbers.forEach(o -> assertThat(o).isNot(EVEN));
     }
 
     @Test
