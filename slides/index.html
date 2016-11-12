@@ -63,6 +63,45 @@ Observable.defer(factory); </span>
                     </section>
 
                 </section>
+                <section>
+                    <section>
+                        <h2>Operacje na Observable</h2>
+                        <p>Observable jest immutable, więc w wyniku operacji dostajemy nowy Observable z zaplikowanym wynikiem operacji</p>
+                        <p>Co możemy robić?</p>
+                        <ul>
+                            <li>Transformacje</li>
+                        </ul>
+
+                    </section>
+
+                    <section>
+                        <h2>Transformacje</h2>
+
+<pre><code class="java" data-trim data-noescape>
+<span class="fragment">o.map(func); // przekształcenie podaną funkcją</span>
+<span class="fragment">
+// przekształcenie podaną funkcją w nowy Observable
+// a następnie połączenie ich ze sobą w jeden Observable
+o.flatMap(func);
+</span>
+<span class="fragment">// nowy observable dla każdej grupy zdefiniowanej podaną funkcją
+o.groupBy(func);
+</span>
+<span class="fragment">// akumuluje kazdy kolejny element źródłowy i emituje wynik akumulacji
+o.scan(biFunc);
+</span>
+<span class="fragment">// bierze size kolejnych elementów źródłowych i emitje je razem
+o.bufer(size);
+</span>
+<span class="fragment">// bierze size kolejnych elementów źródłowych tworząc nowy Observable
+o.window(size);
+</span>
+</code></pre>
+                    </section>
+
+                </section>
+
+
 
 			</div>
 		</div>
@@ -80,7 +119,11 @@ Observable.defer(factory); </span>
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
 					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+
+
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { 
+hljs.initHighlightingOnLoad();
+[].forEach.call( document.querySelectorAll( '.highlight' ), function( v, i) {                        hljs.highlightBlock(v);                    }); } }
 				]
 			});
 		</script>
