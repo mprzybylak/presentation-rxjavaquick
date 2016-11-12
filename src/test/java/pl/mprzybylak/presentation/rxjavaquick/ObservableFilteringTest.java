@@ -151,6 +151,20 @@ public class ObservableFilteringTest {
         assertThat(firstElements.get(9)).isEqualTo(10);
     }
 
+    @Test
+    public void takeLastNElements() {
+
+        // given
+        List<Integer> lastElements = new ArrayList<>(10);
+
+        // when
+        Observable.range(1, 100)
+                .takeLast(10)
+                .subscribe(lastElements::add);
+
+        // then
+        assertThat(lastElements.get(0)).isEqualTo(91);
+    }
 
 
 }
