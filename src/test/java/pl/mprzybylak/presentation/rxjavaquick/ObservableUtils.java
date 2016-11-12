@@ -51,6 +51,21 @@ public class ObservableUtils {
     }
 
     @Test
+    public void actionOnError() {
+
+        // given
+        AtomicBoolean b = new AtomicBoolean(false);
+
+        // when
+        Observable.error(new NullPointerException())
+                .doOnError(throwable -> b.set(true))
+                .subscribe();
+
+        // then
+        assertThat(b.get()).isTrue();
+    }
+
+    @Test
     public void actionOnEachElement() {} {
 
         // given
