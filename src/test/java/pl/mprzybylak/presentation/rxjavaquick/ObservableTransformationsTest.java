@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -85,13 +86,12 @@ public class ObservableTransformationsTest {
         List<Integer> evenNumbers = new ArrayList<>(500);
 
         // when
-        Observable.range(1,1000)
+        Observable.range(1, 1000)
             .groupBy(i -> i % 2)
             .subscribe(groups -> {
-                if(groups.getKey() == 0) {
+                if (groups.getKey() == 0) {
                     groups.subscribe(evenNumbers::add);
-                }
-                else {
+                } else {
                     groups.subscribe(oddNumbers::add);
                 }
             });
@@ -99,6 +99,28 @@ public class ObservableTransformationsTest {
         // then
         evenNumbers.forEach(o -> assertThat(o).is(EVEN));
         oddNumbers.forEach(o -> assertThat(o).isNot(EVEN));
+    }
+
+    @Test
+    public void bufferItems() {
+
+        // given
+        List<Integer> sumsOfTwoValues = new ArrayList<>(5);
+
+        // when
+        Observable.range(1, 10)
+                .buffer(2)
+                .subscribe(b -> sumsOfTwoValues.add(b.stream()
+                        .mapToInt(Integer::intValue)
+                        .sum())
+                );
+
+        // then
+        assertThat(sumsOfTwoValues.get(0)).isEqualTo(1 + 2);
+        assertThat(sumsOfTwoValues.get(1)).isEqualTo(3 + 4);
+        assertThat(sumsOfTwoValues.get(2)).isEqualTo(5 + 6);
+        assertThat(sumsOfTwoValues.get(3)).isEqualTo(7 + 8);
+        assertThat(sumsOfTwoValues.get(4)).isEqualTo(9 + 10);
     }
 
     @Test
