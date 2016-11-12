@@ -32,6 +32,19 @@ public class ObservableFilteringTest {
     }
 
     @Test
+    public void onlyFirstThatMatchPredicate() {
+
+        // given
+        AtomicInteger firstEven = new AtomicInteger();
+
+        // when
+        Observable.range(1, 1000)
+                .takeFirst(i -> i % 2 == 0);
+
+        assertThat(firstEven.get()).is(EVEN);
+    }
+
+    @Test
     public void onlyDistinctElements() {
 
         // given
