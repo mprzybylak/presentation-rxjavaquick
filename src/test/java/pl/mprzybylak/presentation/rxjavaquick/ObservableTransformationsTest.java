@@ -104,6 +104,21 @@ public class ObservableTransformationsTest {
     }
 
     @Test
+    public void accumulateItems() {
+
+        // given
+        AtomicInteger sum = new AtomicInteger(0);
+
+        // when
+        Observable.range(1,5)
+                .scan((first, second) -> first + second)
+                .subscribe(sum::set);
+
+        // then
+        assertThat(sum.get()).isEqualTo(1 + 2 + 3 + 4 + 5);
+    }
+
+    @Test
     public void bufferItems() {
 
         // given
