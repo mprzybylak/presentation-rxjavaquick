@@ -55,8 +55,8 @@
 <span class="fragment">/*
 Wykorzysta przekazaną fabrykę
 (typ Callable &lt;? extends ObservableSource &lt;? extends T&gt;&gt;)
-do stworzenia Observable <mark>dopiero</mark> w momencie subskrypcji.
-Każdy subskrybent dostanie <mark>kolejnego</mark> Observable z fabryki
+do stworzenia Observable dopiero w momencie subskrypcji.
+Każdy subskrybent dostanie kolejnego Observable z fabryki
 */
 Observable.defer(factory); </span>
 </code></pre>
@@ -71,6 +71,7 @@ Observable.defer(factory); </span>
                         <ul>
                             <li>Transformacje</li>
                             <li>Filtrowanie</li>
+                            <li>Operacje agregujące</li>
                         </ul>
 
                     </section>
@@ -118,7 +119,21 @@ o.window(size);
 </code></pre>
                     </section>
 
+                    <section>
+
+                        <h2>Operacje agregujące</h2>
+
+<pre><code class="java" data-trim data-noescape>
+<span class="fragment">o.count(); // zlicza ilość elementów i ją emituje</span>
+<span class="fragment">o.collect(initValSupplier, biConsumer); // operacja typu "reduce"</span>
+</code></pre>
+
+                    </section>
+
+
                 </section>
+
+
 
 
 
