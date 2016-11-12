@@ -1,6 +1,7 @@
 package pl.mprzybylak.presentation.rxjavaquick;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
@@ -11,19 +12,17 @@ import java.util.List;
 public class ObservableCombineTest {
 
     @Test
-    public void zip() throws InterruptedException {
+    public void zipObservables() throws InterruptedException {
 
         // given
         List<Integer> combined = new ArrayList<>(10);
 
         // when
         Observable.zip(
-                Observable.range(1, 10).subscribeOn(Schedulers.computation()),
-                Observable.range(20, 10).subscribeOn(Schedulers.computation()),
+                Observable.range(1, 10),
+                Observable.range(20, 10),
                 (first, sec) -> first + sec
         ).subscribe(combined::add);
-
-        Thread.sleep(1000);
 
         // then
         Assertions.assertThat(combined.get(0)).isEqualTo(1 + 20);
