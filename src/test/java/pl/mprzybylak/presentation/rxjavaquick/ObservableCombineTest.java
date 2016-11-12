@@ -63,5 +63,21 @@ public class ObservableCombineTest {
         assertThat(merged.get(3)).isEqualTo(11);
     }
 
+    @Test
+    public void startsWith() {
+
+        // given
+        List<Integer> result = new ArrayList<>(11);
+
+        // when
+        Observable.range(1,10)
+                .startWith(200)
+                .subscribe();
+
+        // then
+        assertThat(result.get(0)).isEqualTo(200);
+
+    }
+
 
 }
