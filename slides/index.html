@@ -31,14 +31,32 @@
                 </section>
 
                 <section>
-
                     <section>
-                        <h2>Tworzenie Observable</h2>
-                        <p>Klasa <code>Observable</code> dostracza nam szereg statycznych metod fabrykujących pozwalających na stworzenie nowej instancji Observable</p>
+                        <h2>Programowanie reaktywne i RxJava</h2>
+                        <p class="fragment">Łączy w sobie wzorce Iterator i Observer rozszerzając je</p>
+                        <p class="fragment">Immutable</p>
+                        <p class="fragment">"Wszystko jest Observable"</p>
                     </section>
+                <section>
+                    <h2>Hello, World!</h2>
+<pre><code class="java" data-trim data-noescape>
+<span class="fragment highlight-current-red">Observable.fromArray(1,2,3,4,5,6,7,8,9,10)</span>
+<span class="fragment highlight-current-red">    .filter(i -> i % 2 == 0)
+    .take(3)
+    .map(i -> i * 2)
+    .reduce((first, sec) -> first + sec)</span>
+<span class="fragment highlight-current-red">    .subscribe(
+        sum -> System.out.println(sum),   // on each element
+        throwable -> System.err.println(throwable),   // on error
+        () -> System.out.println("End!")  // on finish
+    );</span>
+</code></pre>
+                </section>
+                </section>
 
-                    <section>
-                        <h2>Proste rodzaje Observable</h2>
+                <section>
+                    <h2>Tworzenie Observable</h2>
+                    <p>Klasa <code>Observable</code> dostracza nam szereg statycznych metod fabrykujących pozwalających na stworzenie nowej instancji Observable</p>
 <pre><code class="java" data-trim data-noescape>
 <span class="fragment">Observable.just(element); // jeden element</span>
 <span class="fragment">Observable.fromArray(array); // elementy z tablicy</span>
@@ -47,22 +65,9 @@
 <span class="fragment">Observable.fromFuture(future); // rezultat Future::get()</span>
 <span class="fragment">Observable.range(start, count); // sekwencja intów</span>
 </code></pre>
-                    </section>
-
-                    <section>
-                        <h2>Bardziej skomplikowane rodzaje Observable</h2>
-<pre><code class="java" data-trim data-noescape>
-<span class="fragment">/*
-Wykorzysta przekazaną fabrykę
-(typ Callable &lt;? extends ObservableSource &lt;? extends T&gt;&gt;)
-do stworzenia Observable dopiero w momencie subskrypcji.
-Każdy subskrybent dostanie kolejnego Observable z fabryki
-*/
-Observable.defer(factory); </span>
-</code></pre>
-                    </section>
-
                 </section>
+
+
                 <section>
                     <section>
                         <h2>Operacje na Observable</h2>
