@@ -7,9 +7,11 @@ import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -92,6 +94,30 @@ public class ObservableCombineTest {
     }
 
     @Test
+    public void concat() {
+
+        List<Integer> concat = new ArrayList<>(10);
+
+        // when
+        Observable.concat(
+                Observable.range(1,5),
+                Observable.range(6,5)
+        ).subscribe(concat::add);
+
+        // then
+        assertThat(concat.get(0)).isEqualTo(1);
+        assertThat(concat.get(1)).isEqualTo(2);
+        assertThat(concat.get(2)).isEqualTo(3);
+        assertThat(concat.get(3)).isEqualTo(4);
+        assertThat(concat.get(4)).isEqualTo(5);
+        assertThat(concat.get(5)).isEqualTo(6);
+        assertThat(concat.get(6)).isEqualTo(7);
+        assertThat(concat.get(7)).isEqualTo(8);
+        assertThat(concat.get(8)).isEqualTo(9);
+        assertThat(concat.get(9)).isEqualTo(10);
+    }
+
+    @Test
     public void startsWith() {
 
         // given
@@ -104,6 +130,28 @@ public class ObservableCombineTest {
 
         // then
         assertThat(result.get(0)).isEqualTo(200);
+
+    }
+
+    @Test
+    public void onlyFirstWhoEmitWillEmit() throws InterruptedException {
+
+        // given
+        AtomicInteger emited = new AtomicInteger();
+
+        Observable<Integer> first = Observable.just(10).delay(10, TimeUnit.MILLISECONDS);
+        Observable<Integer> second = Observable.just(100).delay(100, TimeUnit.MILLISECONDS);
+        Observable<Integer> third = Observable.just(1000).delay(1000, TimeUnit.MILLISECONDS);
+
+        // when
+        Observable.amb(Arrays.asList(first, second, third))
+                .subscribe(emited::set);
+
+        Thread.sleep(1200);
+
+        // then
+        assertThat(emited.get()).isEqualTo(10);
+
 
     }
 
