@@ -161,9 +161,25 @@ Observable.merge(first, second);
 <span class="fragment">// łączy drugi observable po pierwszym
 Observable.concat(first, second);
 </span>
+<span class="fragment">// emituje elementy z observable, który jako pierwszy zaczął emitować
+Observable.amb(iterable);
+</span>
 </code></pre>
 
                     </section>
+
+                </section>
+
+                <section>
+                    <h2>Operacje typu "Utils"</h2>
+                    <p>Różnego rodzaju inne pomocnicze operacje</p>
+
+<pre><code class="java" data-trim data-noescape>
+<span class="fragment">o.delay(time, timeunit); // opóźnia emisję elementów</span>
+<span class="fragment">o.doOnComplete(action); // kod do wywołania po zakończeniu observable</span>
+<span class="fragment">o.doOnError(throwableConsumer); // kod do wywołania w wypadku błędu</span>
+<span class="fragment">o.doOnEach(consumer); // kod do wywołania dla każdego elementu</span>
+</code></pre>
 
                 </section>
 
