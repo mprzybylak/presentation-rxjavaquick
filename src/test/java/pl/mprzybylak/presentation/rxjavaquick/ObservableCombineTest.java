@@ -42,6 +42,34 @@ public class ObservableCombineTest {
     }
 
     @Test
+    public void combineLatestValeuesFromTwoObservables() throws InterruptedException {
+
+        // given
+        List<Long> results = new ArrayList<>(9);
+
+        Observable<Long> first = Observable.intervalRange(1,5, 0, 10, TimeUnit.MILLISECONDS);
+        Observable<Long> second = Observable.intervalRange(1,5, 5, 10, TimeUnit.MILLISECONDS);
+
+        // when
+        Observable.combineLatest(first, second, (f, s) -> f + s)
+        .subscribe(results::add);
+
+        Thread.sleep(100);
+
+        // then
+        assertThat(results.get(0)).isEqualTo(1 + 1);
+        assertThat(results.get(1)).isEqualTo(2 + 1);
+        assertThat(results.get(2)).isEqualTo(2 + 2);
+        assertThat(results.get(3)).isEqualTo(3 + 2);
+        assertThat(results.get(4)).isEqualTo(3 + 3);
+        assertThat(results.get(5)).isEqualTo(4 + 3);
+        assertThat(results.get(6)).isEqualTo(4 + 4);
+        assertThat(results.get(7)).isEqualTo(5 + 4);
+        assertThat(results.get(8)).isEqualTo(5 + 5);
+
+    }
+
+    @Test
     public void merge() throws InterruptedException {
 
         // given
