@@ -133,7 +133,39 @@ o.window(size);
 
                 </section>
 
+                <section>
 
+                    <section>
+
+                        <h2>Operacje łączące wiele Observables</h2>
+                        <p>Mając kilka instancji Observable, możemy je ze sobą złączyc w jeden</p>
+
+                    </section>
+
+                    <section>
+                        <h2>Operacje typu "combine"</h2>
+
+<pre><code class="java" data-trim data-noescape>
+<span class="fragment">// łączy element z obu observables podaną funkcją
+// czeka aż oba observable wyemitują kolejne elementy
+Observable.zip(first, second, func);
+</span>
+<span class="fragment">// łączy element z obu observables podaną funkcją
+// wystarczy, zę jeden observable wyemituje element
+// funkcja weźmie najnowsze elementy z obu observables
+Observable.combineLatest(first, second, func);
+</span>
+<span class="fragment">// łączy dwa observable, respektując "czasową" kolejność
+Observable.merge(first, second);
+</span>
+<span class="fragment">// łączy drugi observable po pierwszym
+Observable.concat(first, second);
+</span>
+</code></pre>
+
+                    </section>
+
+                </section>
 
 
 
