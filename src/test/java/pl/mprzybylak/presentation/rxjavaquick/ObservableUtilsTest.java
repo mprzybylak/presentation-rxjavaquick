@@ -22,8 +22,11 @@ public class ObservableUtilsTest {
         LocalDateTime beforeSubscription = null;
 
         // when
-        Observable<Integer> o = Observable.range(1, 10).delay(1, TimeUnit.SECONDS);
+        Observable<Integer> o = Observable.range(1, 10)
+                .delay(1, TimeUnit.SECONDS);
+
         beforeSubscription = LocalDateTime.now();
+
         o.subscribe(integer -> dates.add(LocalDateTime.now()));
 
         Thread.sleep(1100);

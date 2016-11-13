@@ -52,13 +52,12 @@ public class ObservableAggregatorsTest {
         AtomicInteger sum = new AtomicInteger();
 
         // when
-        Observable.range(1,100)
+        Observable.range(1, 100)
                 .collect(AtomicInteger::new, AtomicInteger::addAndGet)
                 .subscribe(i -> sum.set(i.get()));
 
         // then
         assertThat(sum.get()).isEqualTo(5050);
     }
-
 
 }
