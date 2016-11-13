@@ -185,6 +185,75 @@ Observable.amb(iterable);
 
                 </section>
 
+                <section>
+                    <section>
+                        <h2>Operacje w innych wątkach</h2>
+                        <p class="fragment">Domyślnie subskrybcja rozpoczony się w wątku, który uruchomił metode subscribe</p>
+                        <p class="fragment">RxJava pozwala nam na używanie innych Schedulerów do subskrybcji/obserwacji</p>
+                        <p class="fragment">Mamy predefiniowane Schedulery, ale możemy je tworzyć też sami</p>
+                        <p class="fragment">Niektóre Observable "naturalnie" startują w innych wątkach</p>
+                    </section>
+
+                    <section>
+                        <h2>Observable domyślnie startujące w innym wątku</h2>
+                        <p>Observables, które są związane z upływem czasu, startują w innym wątku</p>
+
+<pre><code class="java" data-trim data-noescape>
+<span class="fragment">// podobne do range, ale z dodatkowym interwałem czasowym
+o.intervalRange(start, count, initDelay, period, timeUnit);
+</span>
+<span class="fragment">// emituje kolejne liczby naturalne z czasowymi przerwami między nimi
+o.interval(initDelay, period, timeUnit);
+</span>
+<span class="fragment">// emituje pojedyńczą wartość po upływie zadanego czasu
+o.timer(delay, timeUnit);</span>
+</code></pre>
+
+                    </section>
+
+                    <section>
+                        <h2>Zmiana wątku</h2>
+
+                        <div class="fragment">
+                            <p>Zmiana wątku subskrypcji</p>
+<pre><code class="java" data-trim data-noescape>
+Observable.range(1,10)
+    .map(i -> i * 2)
+    <span class="fragment highlight-current-red">.subscribeOn(Schedulers.computation())</span>
+    .filter(i -> i > 10)
+    .take(2)
+    <span class="fragment highlight-current-red">.subscribe(System.out::println);</span>
+</code></pre>
+                        </div>
+                        <div class="fragment">
+                            <p>Zmiana wątku obserwacji</p>
+<pre><code class="java" data-trim data-noescape>
+    Observable.range(1,10)
+    .map(i -> i * 2)
+    <span class="fragment highlight-current-red">.observeOn(Schedulers.computation())</span>
+    <span class="fragment highlight-current-red">.filter(i -> i > 10)
+    .take(2)
+    .subscribe(System.out::println);</span>
+</code></pre>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Schedulery</h2>
+
+<pre><code class="java" data-trim data-noescape>
+<span class="fragment">Schedulers.computation(); // scheduler do obliczeń</span>
+<span class="fragment">Schedulers.io(); // scheduler do operacji io</span>
+<span class="fragment">Schedulers.newThread(); // tworzy nowy wątek dla każdej operacji</span>
+<span class="fragment">Schedulers.from(executor); // scheduler operaty na podanym executorze</span>
+</code></pre>
+
+                    </section>
+
+
+
+                </section>
+
 
 
 			</div>
