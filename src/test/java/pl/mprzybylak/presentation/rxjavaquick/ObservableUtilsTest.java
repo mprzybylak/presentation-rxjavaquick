@@ -1,8 +1,6 @@
 package pl.mprzybylak.presentation.rxjavaquick;
 
 import io.reactivex.Observable;
-import org.assertj.core.api.Assertions;
-import org.assertj.core.util.ArrayWrapperList;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -14,7 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ObservableUtils {
+public class ObservableUtilsTest {
 
     @Test
     public void delay() throws InterruptedException {
