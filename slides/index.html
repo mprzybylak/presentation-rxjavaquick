@@ -72,6 +72,7 @@ Observable.defer(factory); </span>
                             <li>Transformacje</li>
                             <li>Filtrowanie</li>
                             <li>Operacje agregujące</li>
+                            <li>Funkcje boolowskie</li>
                         </ul>
 
                     </section>
@@ -92,12 +93,9 @@ o.groupBy(func);
 <span class="fragment">// akumuluje kazdy kolejny element źródłowy i emituje wynik akumulacji
 o.scan(biFunc);
 </span>
-<span class="fragment">// bierze size kolejnych elementów źródłowych i emitje je razem
-o.bufer(size);
-</span>
-<span class="fragment">// bierze size kolejnych elementów źródłowych tworząc nowy Observable
-o.window(size);
-</span>
+<span class="fragment">o.bufer(size); // emituje n elementów jako jeden</span>
+<span class="fragment">o.window(size); // jak buffer ale emituje observable</span>
+<span class="fragment">o.defaultIfEmpty(val); // zwróci wartość jeżeli observable jest pusty</span>
 </code></pre>
                     </section>
 
@@ -130,20 +128,24 @@ o.window(size);
 
                     </section>
 
+                    <section>
+                        <h2>Funkcje boolowskie</h2>
+
+<pre><code class="java" data-trim data-noescape>
+<span class="fragment">o.all(predicate); // czy wszystkie elementy spełniają predykat</span>
+<span class="fragment">o.contains(predicate); // czy którykolwiek element spełnia predykat</span>
+<span class="fragment">o.sequenceEquals(o1, o2); // czy oba zawierają te same elementy</span>
+
+</code></pre>
+                    </section>
+
 
                 </section>
 
                 <section>
 
                     <section>
-
                         <h2>Operacje łączące wiele Observables</h2>
-                        <p>Mając kilka instancji Observable, możemy je ze sobą złączyc w jeden</p>
-
-                    </section>
-
-                    <section>
-                        <h2>Operacje typu "combine"</h2>
 
 <pre><code class="java" data-trim data-noescape>
 <span class="fragment">// łączy element z obu observables podaną funkcją
