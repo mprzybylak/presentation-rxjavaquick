@@ -33,7 +33,7 @@
                 <section>
                     <section>
                         <h2>Programowanie reaktywne i RxJava</h2>
-                        <p class="fragment">Łączy w sobie wzorce Iterator i Observer rozszerzając je</p>
+                        <p class="fragment">Łączy w sobie wzorce Iterator i Observer rozszerza je</p>
                         <p class="fragment">Immutable</p>
                         <p class="fragment">"Wszystko jest Observable"</p>
                     </section>
@@ -205,13 +205,13 @@ Observable.amb(iterable);
 
 <pre><code class="java" data-trim data-noescape>
 <span class="fragment">// podobne do range, ale z dodatkowym interwałem czasowym
-o.intervalRange(start, count, initDelay, period, timeUnit);
+Observable.intervalRange(start, count, initDelay, period, timeUnit);
 </span>
 <span class="fragment">// emituje kolejne liczby naturalne z czasowymi przerwami między nimi
-o.interval(initDelay, period, timeUnit);
+Observable.interval(initDelay, period, timeUnit);
 </span>
 <span class="fragment">// emituje pojedyńczą wartość po upływie zadanego czasu
-o.timer(delay, timeUnit);</span>
+Observable.timer(delay, timeUnit);</span>
 </code></pre>
 
                     </section>
@@ -257,6 +257,22 @@ Observable.range(1,10)
 
 
 
+                </section>
+                <section>
+
+                    <h2>Co dalej?</h2>
+
+                    <ul>
+                        <li>Kod do tej prezentacji na Githubie <a href="https://github.com/mprzybylak/presentation-rxjavaquick">github.com/mprzybylak/presentation-rxjavaquick</a></li>
+                        <li>Projekt RxJava na Githubie <a href="https://github.com/ReactiveX/RxJava">github.com/ReactiveX/RxJava</a> </li>
+                        <li>Strona projektu ReactiveX <a href="http://reactivex.io">reactivex.io</a> </li>
+                    </ul>
+
+                </section>
+
+                <section>
+                    <h2>Dzięki z uwagę :)</h2>
+                    <p>Michał Przybylak</p>
                 </section>
 
 
