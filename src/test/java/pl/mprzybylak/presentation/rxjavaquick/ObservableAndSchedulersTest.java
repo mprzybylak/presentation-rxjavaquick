@@ -68,7 +68,6 @@ public class ObservableAndSchedulersTest {
 
         // given
         CountDownLatch latch = new CountDownLatch(1);
-        List<Integer> sequence = new ArrayList<>(10);
         LocalDateTime start = LocalDateTime.now();
 
         // when

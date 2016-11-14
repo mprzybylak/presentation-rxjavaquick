@@ -37,4 +37,20 @@ public class HelloWorldTest {
         assertThat(sb.toString()).isEqualTo("Hello, World!");
     }
 
+    @Test
+    public void simpleScenario() {
+
+        Observable.fromArray(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+                .filter(i -> i % 2 == 0)
+                .map(i -> i * 2)
+                .take(3)
+                .reduce((first, sec) -> first + sec)
+                .subscribe(
+                        System.out::println,   // on each element
+                        System.err::println,   // on error
+                        () -> System.out.println("End!")  // on finish
+
+                );
+    }
+
 }
